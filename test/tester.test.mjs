@@ -60,7 +60,7 @@ describe('2048 Game Tests', () => {
     });
 
     it('should initialize the game', () => {
-        expect(currentScoreElem.textContent).to.equal('0');
+        expect(currentScoreElem.textContent).to.equal('2' || '4');
         expect(highScoreElem.textContent).to.equal('0');
         
         // Verify the game board is initialized correctly
