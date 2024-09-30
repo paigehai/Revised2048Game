@@ -1,5 +1,5 @@
 // src/__tests__/game.test.js
-import { initializeGame, updateScore, move, checkGameOver } from '../script.cjs';
+import { initializeGame, updateScore, move, checkGameOver } from '../script.mjs';
 
 // Before running the tests, we need to set up our mock DOM
 describe('2048 Game Tests', () => {

@@ -3,9 +3,9 @@
     "version": "1.0.0",
     "type": "module",
     "description": "A simple JavaScript 2048 game",
-    "main": "script.cjs",
+    "main": "script.mjs",
     "scripts": {
-        "test": "mocha -r esm '**/*.test.cjs'",
+        "test": "mocha -r esm '**/*.test.mjs'",
         "build": "webpack",
         "start": "node index.js"
     },
