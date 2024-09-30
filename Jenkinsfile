@@ -10,7 +10,7 @@ pipeline {
     environment {
         PATH = "/usr/local/bin:${env.PATH}"
         SONAR_TOKEN = credentials('sonarqube-token')
-        DOCKER_IMAGE_NAME = 'paigehai/2O48game:latest'
+        DOCKER_IMAGE_NAME = 'paigehai/2048game:latest'
         SONAR_URL = 'http://localhost:9000/'
     }
 
