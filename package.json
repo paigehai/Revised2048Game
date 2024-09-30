@@ -5,7 +5,7 @@
     "description": "A simple JavaScript 2048 game",
     "main": "script.js",
     "scripts": {
-        "test": "mocha -r esm '**/*.test.js'",
+        "test": "mocha -r esm '**/*.test.cjs'",
         "build": "webpack",
         "start": "node index.js"
     },
