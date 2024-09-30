@@ -1,4 +1,4 @@
-import { JSDOM } from 'jsdom'; // Add JSDOM for mocking the DOM in Node.js
+import { JSDOM } from 'jsdom';
 import { initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
@@ -34,11 +34,11 @@ describe('2048 Game Tests', () => {
         window = dom.window;
         document = dom.window.document;
 
-        // Assign global document so your code can access it
+        // Assign global document so code can access it
         global.window = window;
         global.document = document;
         
-        // Initialize the game before tests
+        // Initialise the game before tests
         initializeGame();
     });
 
