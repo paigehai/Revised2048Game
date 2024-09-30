@@ -1,23 +1,8 @@
-# Use Node.js image to install dependencies
-FROM node:12.18.2 as build
+# Use an official Nginx image as a parent image
+FROM nginx:latest
 
-WORKDIR /app
+# Copy the current directory contents into the container at /usr/share/nginx/html
+COPY ./index.html /usr/share/nginx/html/index.html
 
-# Copy package.json and package-lock.json
-COPY ./package.json /app/package.json
-COPY ./package-lock.json /app/package-lock.json
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application files
-COPY . .
-
-# No build step, so we skip npm run build
-
-# Use nginx to serve the app
-FROM nginx
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy the application files to NGINX's default HTML directory
-COPY --from=build /app /usr/share/nginx/html
+# Expose port 80 to the world outside this container
+EXPOSE 80
