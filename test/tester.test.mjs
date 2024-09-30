@@ -127,7 +127,7 @@ describe('2048 Game Tests', () => {
         move('ArrowLeft');
 
         // Validate the board state after the move
-        expect(board[0]).to.deep.equal([4, 0, 0, 0 || 4, 0, 0, 2 || 4, 2, 0, 0 || 4, 0, 2, 0]);  // The merged result of [2, 2, 0, 0]
+        expect(board[0]).to.deep.equal([4, 0, 0, 0]);  // The merged result of [2, 2, 0, 0]
     });
 
     it('should check game over condition correctly', () => {
