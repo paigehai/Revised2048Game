@@ -8,8 +8,8 @@
     <packaging>jar</packaging>
 
     <properties>
-        <frontend.node.version>v22.9.0</frontend.node.version> <!-- Choose a version -->
-        <frontend.npm.version>10.8.3</frontend.npm.version> <!-- Choose a version -->
+        <frontend.node.version>v22.9.0</frontend.node.version> 
+        <frontend.npm.version>10.8.3</frontend.npm.version>
     </properties>
 
     <build>

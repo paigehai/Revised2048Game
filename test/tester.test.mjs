@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom';
+const { expect } = require('chai');
 import { initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
