@@ -1,11 +1,11 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
-import { 
-    board, 
-    initializeGame, 
-    updateScore, 
-    move, 
-    checkGameOver 
+import {
+    board,
+    initializeGame,
+    updateScore,
+    move,
+    checkGameOver
 } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
@@ -50,6 +50,10 @@ describe('2048 Game Tests', () => {
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
 
+        currentScoreElem.textContent = '0';
+        highScoreElem.textContent = '0';
+        gameOverElem.style.display = 'none';
+
         // Initialise the game before tests
         initializeGame();
     });
@@ -62,7 +66,7 @@ describe('2048 Game Tests', () => {
     it('should initialize the game', () => {
         expect(currentScoreElem.textContent).to.equal('0');
         expect(highScoreElem.textContent).to.equal('0');
-        
+
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
         let hasTile = false;
@@ -74,7 +78,7 @@ describe('2048 Game Tests', () => {
         });
         expect(hasTile).to.be.true; // Check that there is at least one tile
     });
-    
+
 
     it('should update the score correctly', () => {
         updateScore(10);
@@ -136,7 +140,7 @@ describe('2048 Game Tests', () => {
 
         // Check if game over is detected
         checkGameOver();  // This function should alter the DOM (e.g., display the "game-over" div)
-        
+
         // Validate that the game over condition has been applied
         expect(gameOverElem.style.display).to.equal('flex');
     });
