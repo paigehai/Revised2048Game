@@ -1,8 +1,8 @@
 import { JSDOM } from 'jsdom'; // Add JSDOM for mocking the DOM in Node.js
-import { initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
+import { initializeGame, updateScore, move, checkGameOver, board } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
-    let window, document, grid;
+    let window, document;
 
     beforeAll(() => {
         // Set up jsdom to simulate the browser environment
@@ -66,50 +66,60 @@ describe('2048 Game Tests', () => {
     test('should handle restart button click', () => {
         const restartBtn = document.getElementById('restart-btn');
         restartBtn.click(); // Simulate button click
+
+        // Validate that the current score has been reset
         expect(document.getElementById('current-score').textContent).toBe('0');
+
+        // Optionally, check if the board has been reset
+        const gridCells = document.querySelectorAll('.grid div');
+        gridCells.forEach(cell => {
+            expect(cell.textContent).toBe(''); // Assuming cells are reset to empty
+        });
     });
 
     test('should move tiles correctly', () => {
-        // Mock a specific board state
+        // Set a mock initial board state
         const initialBoardState = [
             [2, 2, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0]
         ];
-        
-        // Manually set the board state in the DOM or modify initializeGame for testing
+
+        // Directly assign the mock state to the board
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                board[i][j] = initialBoardState[i][j];  // Assuming board is globally available
+                board[i][j] = initialBoardState[i][j];
             }
         }
 
-        // Call the move function
+        // Simulate moving the tiles to the left
         move('ArrowLeft');
-        
-        // Check the expected board state after the move
-        expect(board[0]).toEqual([4, 0, 0, 0]);  // Expected outcome for the first row
+
+        // Validate the board state after the move
+        expect(board[0]).toEqual([4, 0, 0, 0]);  // The merged result of [2, 2, 0, 0]
     });
 
     test('should check game over condition correctly', () => {
-        // Mock a game over state
+        // Set up a mock "game over" board
         const gameOverBoard = [
             [2, 4, 8, 16],
             [32, 64, 128, 256],
             [512, 1024, 2048, 4096],
             [8192, 16384, 32768, 65536]
         ];
-        
-        // Set the board to the mock state
+
+        // Set the board state manually
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 4; j++) {
-                board[i][j] = gameOverBoard[i][j];  // Assuming board is globally available
+                board[i][j] = gameOverBoard[i][j];
             }
         }
 
         // Check if game over is detected
-        checkGameOver();  // Ensure this function sets some DOM state or returns something to validate
+        checkGameOver();  // This function should alter the DOM (e.g., display the "game-over" div)
+        
+        // Validate that the game over condition has been applied
         expect(document.getElementById('game-over').style.display).toBe('flex');
     });
 });
