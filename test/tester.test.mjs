@@ -56,7 +56,7 @@ describe('2048 Game Tests', () => {
     it('should initialize the game', () => {
         expect(currentScoreElem.textContent).to.equal('0');
         expect(highScoreElem.textContent).to.equal('0');
-        
+
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
         gridCells.forEach(cell => {
@@ -124,7 +124,7 @@ describe('2048 Game Tests', () => {
 
         // Check if game over is detected
         checkGameOver();  // This function should alter the DOM (e.g., display the "game-over" div)
-        
+
         // Validate that the game over condition has been applied
         expect(gameOverElem.style.display).to.equal('flex');
     });
