@@ -16,7 +16,7 @@ if (typeof localStorage === 'undefined') {
     };
 }
 
-let board = [];
+export let board = [];
 let currentScore = 0;
 let highScore = localStorage.getItem('2048-highScore') || 0;
 let currentScoreElem;
@@ -163,8 +163,8 @@ export function checkGameOver() {
     gameOverElem.style.display = 'flex';
 }
 
-// Then place your event listener logic
-document.addEventListener('DOMContentLoaded', () => {
+// Initialize the game and set up event listeners
+export function startGame() {
     currentScoreElem = document.getElementById('current-score');
     highScoreElem = document.getElementById('high-score');
     gameOverElem = document.getElementById('game-over');
@@ -179,4 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById('restart-btn').addEventListener('click', restartGame);
     initializeGame();
-});
+}
+
+// Call startGame only if document is defined
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', startGame);
+}

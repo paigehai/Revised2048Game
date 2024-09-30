@@ -1,11 +1,11 @@
 import { JSDOM } from 'jsdom';
-const { expect } = require('chai');
-import { initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
+import { expect } from 'chai';
+import { board, initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
     let window, document;
 
-    beforeAll(() => {
+    before(() => {
         // Set up jsdom to simulate the browser environment
         const dom = new JSDOM(`<!DOCTYPE html><html><body>
             <div id="current-score">0</div>
@@ -33,12 +33,17 @@ describe('2048 Game Tests', () => {
         </body></html>`);
 
         window = dom.window;
-        document = dom.window.document;
+        document = window.document;
 
         // Assign global document so code can access it
         global.window = window;
         global.document = document;
-        
+
+        // Initialize elements
+        global.currentScoreElem = document.getElementById('current-score');
+        global.highScoreElem = document.getElementById('high-score');
+        global.gameOverElem = document.getElementById('game-over');
+
         // Initialise the game before tests
         initializeGame();
     });
@@ -48,37 +53,37 @@ describe('2048 Game Tests', () => {
         initializeGame();
     });
 
-    test('should initialize the game', () => {
-        expect(document.getElementById('current-score').textContent).toBe('0');
-        expect(document.getElementById('high-score').textContent).toBe('0');
+    it('should initialize the game', () => {
+        expect(currentScoreElem.textContent).to.equal('0');
+        expect(highScoreElem.textContent).to.equal('0');
         
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
         gridCells.forEach(cell => {
-            expect(cell.textContent).toBe(''); // Assuming empty cells are rendered as empty
+            expect(cell.textContent).to.equal(''); // Assuming empty cells are rendered as empty
         });
     });
 
-    test('should update the score correctly', () => {
+    it('should update the score correctly', () => {
         updateScore(10);
-        expect(document.getElementById('current-score').textContent).toBe('10');
+        expect(currentScoreElem.textContent).to.equal('10');
     });
 
-    test('should handle restart button click', () => {
+    it('should handle restart button click', () => {
         const restartBtn = document.getElementById('restart-btn');
         restartBtn.click(); // Simulate button click
 
         // Validate that the current score has been reset
-        expect(document.getElementById('current-score').textContent).toBe('0');
+        expect(currentScoreElem.textContent).to.equal('0');
 
         // Optionally, check if the board has been reset
         const gridCells = document.querySelectorAll('.grid div');
         gridCells.forEach(cell => {
-            expect(cell.textContent).toBe(''); // Assuming cells are reset to empty
+            expect(cell.textContent).to.equal(''); // Assuming cells are reset to empty
         });
     });
 
-    test('should move tiles correctly', () => {
+    it('should move tiles correctly', () => {
         // Set a mock initial board state
         const initialBoardState = [
             [2, 2, 0, 0],
@@ -98,10 +103,10 @@ describe('2048 Game Tests', () => {
         move('ArrowLeft');
 
         // Validate the board state after the move
-        expect(board[0]).toEqual([4, 0, 0, 0]);  // The merged result of [2, 2, 0, 0]
+        expect(board[0]).to.deep.equal([4, 0, 0, 0]);  // The merged result of [2, 2, 0, 0]
     });
 
-    test('should check game over condition correctly', () => {
+    it('should check game over condition correctly', () => {
         // Set up a mock "game over" board
         const gameOverBoard = [
             [2, 4, 8, 16],
@@ -121,6 +126,6 @@ describe('2048 Game Tests', () => {
         checkGameOver();  // This function should alter the DOM (e.g., display the "game-over" div)
         
         // Validate that the game over condition has been applied
-        expect(document.getElementById('game-over').style.display).toBe('flex');
+        expect(gameOverElem.style.display).to.equal('flex');
     });
 });
