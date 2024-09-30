@@ -174,6 +174,6 @@ describe('2048 Game Tests', () => {
 
         // Check that a random tile has been placed
         const nonZeroTiles = board.flat().filter(value => value !== 0).length;
-        expect(nonZeroTiles).to.equal(3); // 2 tiles + 1 new tile
+        expect(nonZeroTiles).to.equal(2); // 1 merged tile, 1 new tile
     });
 });
