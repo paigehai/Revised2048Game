@@ -16,9 +16,9 @@ if (typeof localStorage === 'undefined') {
     };
 }
 
-export const board = [];
-export const currentScore = 0;
-export const highScore = localStorage.getItem('2048-highScore') || 0;
+export let board = [];
+export let currentScore = 0;
+export let highScore = localStorage.getItem('2048-highScore') || 0;
 export let currentScoreElem;
 export let highScoreElem;
 export let gameOverElem;
