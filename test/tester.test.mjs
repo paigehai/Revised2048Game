@@ -1,6 +1,12 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
-import { board, initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
+import { 
+    board, 
+    initializeGame, 
+    updateScore, 
+    move, 
+    checkGameOver 
+} from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
     let window, document;
@@ -49,14 +55,14 @@ describe('2048 Game Tests', () => {
     });
 
     beforeEach(() => {
-        // Reset the game state or mock data before each test
+        // Reset the game state before each test
         initializeGame();
     });
 
     it('should initialize the game', () => {
         expect(currentScoreElem.textContent).to.equal('0');
         expect(highScoreElem.textContent).to.equal('0');
-
+        
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
         gridCells.forEach(cell => {
@@ -124,8 +130,32 @@ describe('2048 Game Tests', () => {
 
         // Check if game over is detected
         checkGameOver();  // This function should alter the DOM (e.g., display the "game-over" div)
-
+        
         // Validate that the game over condition has been applied
         expect(gameOverElem.style.display).to.equal('flex');
+    });
+
+    it('should place a random tile after a move', () => {
+        // Set up an initial board state with one empty space
+        const initialBoardState = [
+            [2, 0, 2, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ];
+
+        // Directly assign the mock state to the board
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                board[i][j] = initialBoardState[i][j];
+            }
+        }
+
+        // Simulate a move that causes a change
+        move('ArrowLeft');
+
+        // Check that a random tile has been placed
+        const nonZeroTiles = board.flat().filter(value => value !== 0).length;
+        expect(nonZeroTiles).to.equal(3); // 2 tiles + 1 new tile
     });
 });
