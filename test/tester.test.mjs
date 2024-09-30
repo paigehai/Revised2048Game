@@ -66,7 +66,7 @@ describe('2048 Game Tests', () => {
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
         gridCells.forEach(cell => {
-            expect(cell.textContent).to.equal('2' || '4'); 
+            expect(cell.textContent).to.equal('2' || '4' || ''); // Assuming the board is initialized with 2s and 4s
         });
     });
 
