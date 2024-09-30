@@ -9,8 +9,6 @@ RUN npm install --production
 
 COPY ./ ./
 
-RUN npm run build
-
 # Expose port 80 to the world outside this container
 EXPOSE 80
 
