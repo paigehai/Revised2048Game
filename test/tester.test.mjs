@@ -95,10 +95,16 @@ describe('2048 Game Tests', () => {
         // Validate that the current score has been reset
         expect(currentScoreElem.textContent).to.equal('0');
 
-        // Optionally, check if the board has been reset
+        // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
+        let hasTile = false;
         gridCells.forEach(cell => {
-            expect(cell.textContent).to.equal(''); // Assuming cells are reset to empty
+            const cellValue = cell.textContent;
+            if (cellValue === '2' || cellValue === '4') {
+                hasTile = true; // At least one tile is present
+            }
+        });
+        expect(hasTile).to.be.true; // Check that there is at least one tile
         });
     });
 
