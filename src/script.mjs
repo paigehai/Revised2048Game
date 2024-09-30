@@ -43,8 +43,6 @@ export function restartGame() {
 
 export function initializeGame() {
     board = [...Array(size)].map(e => Array(size).fill(0));
-    currentScore = 0;
-    currentScoreElem.textContent = '0';
     placeRandom();
     placeRandom();
     renderBoard();
