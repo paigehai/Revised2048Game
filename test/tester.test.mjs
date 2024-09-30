@@ -5,7 +5,7 @@ import {
     updateScore,
     move,
     checkGameOver,
-    startGame
+    restartGame
 } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
@@ -50,7 +50,7 @@ describe('2048 Game Tests', () => {
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
 
-        startGame();
+        restartGame();
 
         currentScoreElem.textContent = '0';
         highScoreElem.textContent = '0';
