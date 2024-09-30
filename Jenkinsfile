@@ -58,6 +58,7 @@ pipeline {
                             -Dsonar.projectName=2048Game \
                             -Dsonar.projectKey=2048Game \
                             -Dsonar.java.binaries=. \
+                            -Dsonar.inclusions=src/script.mjs \
                             -Dsonar.url=${SONAR_URL} \
                         """
                     }

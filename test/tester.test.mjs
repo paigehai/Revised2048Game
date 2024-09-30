@@ -153,7 +153,7 @@ describe('2048 Game Tests', () => {
         expect(gameOverElem.style.display).to.equal('flex');
     });
 
-    it('should place a random tile after a move', () => {
+    it('Random Tile After Move Unit Test', () => {
         // Set up an initial board state with one empty space
         const initialBoardState = [
             [2, 0, 2, 0],
