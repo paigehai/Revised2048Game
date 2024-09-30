@@ -17,11 +17,11 @@ if (typeof localStorage === 'undefined') {
 }
 
 export let board = [];
-let currentScore = 0;
+export let currentScore = 0;
 let highScore = localStorage.getItem('2048-highScore') || 0;
-let currentScoreElem;
-let highScoreElem;
-let gameOverElem;
+export let currentScoreElem;
+export let highScoreElem;
+export let gameOverElem;
 const size = 4; // Board size
 
 export function updateScore(value) {
