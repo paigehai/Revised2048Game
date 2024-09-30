@@ -19,10 +19,10 @@ if (typeof localStorage === 'undefined') {
 export let board = [];
 let currentScore = 0;
 let highScore = localStorage.getItem('2048-highScore') || 0;
-let currentScoreElem = document.getElementById('current-score');
-let highScoreElem = document.getElementById('high-score');
-let gameOverElem = document.getElementById('game-over');
-const size = 4; 
+let currentScoreElem;
+let highScoreElem;
+let gameOverElem;
+const size = 4; // Board size
 
 export function updateScore(value) {
     currentScore += value;
@@ -43,7 +43,6 @@ export function restartGame() {
 
 export function initializeGame() {
     board = [...Array(size)].map(e => Array(size).fill(0));
-    currentScore = 0;
     placeRandom();
     placeRandom();
     renderBoard();
