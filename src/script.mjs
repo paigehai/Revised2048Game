@@ -1,3 +1,11 @@
+let board = [];
+let currentScore = 0;
+let highScore = localStorage.getItem('2048-highScore') || 0;
+let currentScoreElem;
+let highScoreElem;
+let gameOverElem;
+const size = 4; // Board size
+
 export function updateScore(value) {
     currentScore += value;
     currentScoreElem.textContent = currentScore;
@@ -139,21 +147,18 @@ export function checkGameOver() {
 
 // Then place your event listener logic
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.grid');
-    const size = 4;
-    let board = [];
-    let currentScore = 0;
-    const currentScoreElem = document.getElementById('current-score');
-    let highScore = localStorage.getItem('2048-highScore') || 0;
-    const highScoreElem = document.getElementById('high-score');
+    currentScoreElem = document.getElementById('current-score');
+    highScoreElem = document.getElementById('high-score');
+    gameOverElem = document.getElementById('game-over');
+
     highScoreElem.textContent = highScore;
-    const gameOverElem = document.getElementById('game-over');
 
     document.addEventListener('keydown', event => {
         if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
             move(event.key);
         }
     });
+    
     document.getElementById('restart-btn').addEventListener('click', restartGame);
     initializeGame();
 });
