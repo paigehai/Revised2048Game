@@ -5,7 +5,8 @@ import {
     initializeGame,
     updateScore,
     move,
-    checkGameOver
+    checkGameOver,
+    startGame
 } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
