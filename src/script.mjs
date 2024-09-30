@@ -14,11 +14,11 @@ export function restartGame() {
     currentScore = 0;
     currentScoreElem.textContent = '0';
     gameOverElem.style.display = 'none';
-    initializeGame();
+    initialiseGame();
 }
 
-// Function to initialize the game
-export function initializeGame() {
+// Function to initialise the game
+export function initialiseGame() {
     board = [...Array(size)].map(e => Array(size).fill(0));
     placeRandom();
     placeRandom();
@@ -170,5 +170,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('restart-btn').addEventListener('click', restartGame);
 
-    initializeGame();
+    initialiseGame();
 });

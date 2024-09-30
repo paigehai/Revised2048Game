@@ -1,7 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
 import {
-    board,
     initialiseGame,
     updateScore,
     move,
