@@ -60,13 +60,13 @@ describe('2048 Game Tests', () => {
     });
 
     it('should initialize the game', () => {
-        expect(currentScoreElem.textContent).to.equal('0'); // Assuming the initial score is 2 or 4
+        expect(currentScoreElem.textContent).to.equal('0');
         expect(highScoreElem.textContent).to.equal('0');
         
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
         gridCells.forEach(cell => {
-            expect(cell.textContent).to.equal(''); // Assuming empty cells are rendered as empty
+            expect(cell.textContent).to.equal('2' || '4'); 
         });
     });
 
