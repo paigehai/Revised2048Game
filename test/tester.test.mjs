@@ -50,6 +50,8 @@ describe('2048 Game Tests', () => {
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
 
+        startGame();
+
         currentScoreElem.textContent = '0';
         highScoreElem.textContent = '0';
         gameOverElem.style.display = 'none';
