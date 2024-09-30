@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom'; // Add JSDOM for mocking the DOM in Node.js
-import { initializeGame, updateScore, move, checkGameOver, board } from '../src/script.mjs';
+import { initializeGame, updateScore, move, checkGameOver } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
     let window, document;
