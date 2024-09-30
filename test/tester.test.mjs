@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
 import {
     board,
-    initializeGame,
+    initialiseGame,
     updateScore,
     move,
     checkGameOver,
@@ -46,7 +46,7 @@ describe('2048 Game Tests', () => {
         global.window = window;
         global.document = document;
 
-        // Initialize elements
+        // Initialise elements
         global.currentScoreElem = document.getElementById('current-score');
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
@@ -58,19 +58,19 @@ describe('2048 Game Tests', () => {
         gameOverElem.style.display = 'none';
 
         // Initialise the game before tests
-        initializeGame();
+        initialiseGame();
     });
 
     beforeEach(() => {
         // Reset the game state before each test
-        initializeGame();
+        initialiseGame();
     });
 
-    it('should initialize the game', () => {
+    it('Game Initialisation Unit Test', () => {
         expect(currentScoreElem.textContent).to.equal('0');
         expect(highScoreElem.textContent).to.equal('0');
 
-        // Verify the game board is initialized correctly
+        // Verify the game board is initialised correctly
         const gridCells = document.querySelectorAll('.grid div');
         let hasTile = false;
         gridCells.forEach(cell => {
@@ -83,19 +83,19 @@ describe('2048 Game Tests', () => {
     });
 
 
-    it('should update the score correctly', () => {
+    it('Game Update Unit Test', () => {
         updateScore(10);
         expect(currentScoreElem.textContent).to.equal('10');
     });
 
-    it('should handle restart button click', () => {
+    it('Mouse Button Click Unit Test', () => {
         const restartBtn = document.getElementById('restart-btn');
         restartBtn.click(); // Simulate button click
 
         // Validate that the current score has been reset
         expect(currentScoreElem.textContent).to.equal('0');
 
-        // Verify the game board is initialized correctly
+        // Verify the game board is initialised correctly
         const gridCells = document.querySelectorAll('.grid div');
         let hasTile = false;
         gridCells.forEach(cell => {
@@ -107,7 +107,7 @@ describe('2048 Game Tests', () => {
         expect(hasTile).to.be.true; // Check that there is at least one tile
     });
 
-    it('should move tiles correctly', () => {
+    it('Tile Movement Unit Test', () => {
         // Set a mock initial board state
         const initialBoardState = [
             [2, 2, 0, 0],
@@ -130,7 +130,7 @@ describe('2048 Game Tests', () => {
         expect(board[0]).to.deep.equal([4, 0, 0, 0]);  // The merged result of [2, 2, 0, 0]
     });
 
-    it('should check game over condition correctly', () => {
+    it('Game Over Unit Test', () => {
         // Set up a mock "game over" board
         const gameOverBoard = [
             [2, 4, 8, 16],

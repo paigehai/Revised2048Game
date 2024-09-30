@@ -38,10 +38,10 @@ export function restartGame() {
     currentScore = 0;
     currentScoreElem.textContent = '0';
     gameOverElem.style.display = 'none';
-    initializeGame();
+    initialiseGame();
 }
 
-export function initializeGame() {
+export function initialiseGame() {
     board = [...Array(size)].map(e => Array(size).fill(0));
     placeRandom();
     placeRandom();
@@ -163,7 +163,7 @@ export function checkGameOver() {
     gameOverElem.style.display = 'flex';
 }
 
-// Initialize the game and set up event listeners
+// Initialise the game and set up event listeners
 export function startGame() {
     currentScoreElem = document.getElementById('current-score');
     highScoreElem = document.getElementById('high-score');
@@ -178,7 +178,7 @@ export function startGame() {
     });
     
     document.getElementById('restart-btn').addEventListener('click', restartGame);
-    initializeGame();
+    initialiseGame();
 }
 
 // Call startGame only if document is defined
