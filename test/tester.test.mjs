@@ -105,7 +105,6 @@ describe('2048 Game Tests', () => {
             }
         });
         expect(hasTile).to.be.true; // Check that there is at least one tile
-        });
     });
 
     it('should move tiles correctly', () => {
