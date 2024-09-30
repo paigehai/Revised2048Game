@@ -1,7 +1,7 @@
 # Use an official Nginx image as a parent image
 FROM node:alpine
 
-WORKDIR usr/app
+WORKDIR /usr/src/app
 # Copy the current directory contents into the container at /usr/share/nginx/html
 COPY ./package*.json .
 

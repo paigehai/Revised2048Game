@@ -70,7 +70,7 @@ export function renderBoard() {
     }
     // Cleanup animation classes
     setTimeout(() => {
-        const cells = document.querySelectorAll('.grid-cell');
+        const cells = document.querySelectorAll('.cell');
         cells.forEach(cell => {
             cell.classList.remove('merged-tile', 'new-tile');
         });
