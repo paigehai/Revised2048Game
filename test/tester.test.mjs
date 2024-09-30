@@ -65,10 +65,16 @@ describe('2048 Game Tests', () => {
         
         // Verify the game board is initialized correctly
         const gridCells = document.querySelectorAll('.grid div');
+        let hasTile = false;
         gridCells.forEach(cell => {
-            expect(cell.textContent).to.equal('2' || '4' || ''); // Assuming the board is initialized with 2s and 4s
+            const cellValue = cell.textContent;
+            if (cellValue === '2' || cellValue === '4') {
+                hasTile = true; // At least one tile is present
+            }
         });
+        expect(hasTile).to.be.true; // Check that there is at least one tile
     });
+    
 
     it('should update the score correctly', () => {
         updateScore(10);
