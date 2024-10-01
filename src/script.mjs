@@ -1,13 +1,30 @@
+if (typeof localStorage === 'undefined') {
+    global.localStorage = {
+        store: {},
+        getItem(key) {
+            return this.store[key] || null;
+        },
+        setItem(key, value) {
+            this.store[key] = value;
+        },
+        removeItem(key) {
+            delete this.store[key];
+        },
+        clear() {
+            this.store = {};
+        }
+    };
+}
+
+
 // Game configuration
 const size = 4;
 export let board = [];
 export let currentScore = 0;
-let highScore = 0; // Default high score
-
-// UI Elements
-let currentScoreElem;
-let highScoreElem;
-let gameOverElem;
+export let highScore = 0; // Default high score
+export let currentScoreElem;
+export let highScoreElem;
+export let gameOverElem;
 
 // Function to load high score from localStorage
 function loadHighScore() {
@@ -200,4 +217,27 @@ export function checkGameOver() {
     if (gameOverElem) {
         gameOverElem.style.display = 'flex';
     }
+}
+
+// Initialise the game and set up event listeners
+export function startGame() {
+    currentScoreElem = document.getElementById('current-score');
+    highScoreElem = document.getElementById('high-score');
+    gameOverElem = document.getElementById('game-over');
+
+    highScoreElem.textContent = highScore;
+
+    document.addEventListener('keydown', event => {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+            move(event.key);
+        }
+    });
+    
+    document.getElementById('restart-btn').addEventListener('click', restartGame);
+    initialiseGame();
+}
+
+// Call startGame only if document is defined
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', startGame);
 }

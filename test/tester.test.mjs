@@ -2,18 +2,17 @@ import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
 import {
     board,
-    restartGame,
-    currentScore,
-    move,
+    initialiseGame,
     updateScore,
+    move,
     checkGameOver,
-    initialiseGame
-} from '../src/script.mjs'; // adjust the import path as needed
+    startGame
+} from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
     let window, document;
 
-    before(async () => {
+    before(() => {
         // Set up jsdom to simulate the browser environment
         const dom = new JSDOM(`<!DOCTYPE html><html><body>
             <div id="current-score">0</div>
@@ -52,25 +51,13 @@ describe('2048 Game Tests', () => {
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
 
-        // Mock localStorage
-        global.localStorage = {
-            store: {},
-            getItem(key) {
-                return this.store[key] || null;
-            },
-            setItem(key, value) {
-                this.store[key] = value.toString();
-            },
-            removeItem(key) {
-                delete this.store[key];
-            },
-            clear() {
-                this.store = {};
-            }
-        };
+        startGame();
 
-        // Set up the game
-        restartGame();
+        currentScoreElem.textContent = '0';
+        highScoreElem.textContent = '0';
+        gameOverElem.style.display = 'none';
+
+        // Initialise the game before tests
         initialiseGame();
     });
 
@@ -95,8 +82,8 @@ describe('2048 Game Tests', () => {
         expect(hasTile).to.be.true; // Check that there is at least one tile
     });
 
+
     it('Game Update Unit Test', () => {
-        currentScoreElem.textContent = '0'; 
         updateScore(10);
         expect(currentScoreElem.textContent).to.equal('10');
     });
