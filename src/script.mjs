@@ -1,3 +1,14 @@
+// Game configuration
+const size = 4;
+let board = [];
+let currentScore = 0;
+let highScore = localStorage.getItem('2048-highScore') || 0;
+
+// UI Elements
+const currentScoreElem = document.getElementById('current-score');
+const highScoreElem = document.getElementById('high-score');
+const gameOverElem = document.getElementById('game-over');
+
 // Function to update the score
 export function updateScore(value) {
     currentScore += value;
@@ -148,19 +159,10 @@ export function checkGameOver() {
     gameOverElem.style.display = 'flex';
 }
 
+// Set up the DOMContentLoaded listener
 document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.querySelector('.grid');
-    const size = 4;
-    let board = [];
-    let currentScore = 0;
-    const currentScoreElem = document.getElementById('current-score');
-
-    // Get the high score from local storage or set it to 0 if not found
-    let highScore = localStorage.getItem('2048-highScore') || 0;
-    const highScoreElem = document.getElementById('high-score');
+    // Update the high score display
     highScoreElem.textContent = highScore;
-
-    const gameOverElem = document.getElementById('game-over');
 
     // Event listeners
     document.addEventListener('keydown', event => {

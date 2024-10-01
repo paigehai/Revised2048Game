@@ -1,17 +1,10 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
-import {
-    initialiseGame,
-    updateScore,
-    move,
-    checkGameOver,
-    restartGame
-} from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
     let window, document;
 
-    before(() => {
+    before(async () => {
         // Set up jsdom to simulate the browser environment
         const dom = new JSDOM(`<!DOCTYPE html><html><body>
             <div id="current-score">0</div>
@@ -50,7 +43,15 @@ describe('2048 Game Tests', () => {
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
 
-        restartGame();
+        // Now import the game logic after JSDOM setup
+        const game = await import('../src/script.mjs');
+
+        // Set up the game
+        game.restartGame();
+        global.initialiseGame = game.initialiseGame;
+        global.updateScore = game.updateScore;
+        global.move = game.move;
+        global.checkGameOver = game.checkGameOver;
 
         currentScoreElem.textContent = '0';
         highScoreElem.textContent = '0';
@@ -80,7 +81,6 @@ describe('2048 Game Tests', () => {
         });
         expect(hasTile).to.be.true; // Check that there is at least one tile
     });
-
 
     it('Game Update Unit Test', () => {
         updateScore(10);
