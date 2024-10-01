@@ -1,5 +1,7 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
+import { board, restartGame, move, updateScore, checkGameOver, initialiseGame } from '../src/script.mjs';
+
 
 describe('2048 Game Tests', () => {
     let window, document;
@@ -58,9 +60,6 @@ describe('2048 Game Tests', () => {
         global.currentScoreElem = document.getElementById('current-score');
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
-
-        // Now import the game logic after JSDOM setup
-        const game = await import('../src/script.mjs');
 
         // Set up the game
         game.restartGame();
