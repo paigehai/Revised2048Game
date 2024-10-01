@@ -4,5 +4,5 @@ FROM nginx:alpine
 # Copy the current directory contents into the container at /usr/share/nginx/html
 COPY . /usr/share/nginx/html
 
-# Expose port 80 to the world outside this container
-EXPOSE 80
+# Expose port 3000 to the world outside this container
+EXPOSE 3000
