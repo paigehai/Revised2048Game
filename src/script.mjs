@@ -5,9 +5,9 @@ let currentScore = 0;
 let highScore = 0; // Default high score
 
 // UI Elements
-const currentScoreElem = document.getElementById('current-score');
-const highScoreElem = document.getElementById('high-score');
-const gameOverElem = document.getElementById('game-over');
+let currentScoreElem;
+let highScoreElem;
+let gameOverElem;
 
 // Function to load high score from localStorage
 function loadHighScore() {
@@ -19,6 +19,10 @@ function loadHighScore() {
 
 // Load the high score when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    currentScoreElem = document.getElementById('current-score');
+    highScoreElem = document.getElementById('high-score');
+    gameOverElem = document.getElementById('game-over');
+    
     highScore = loadHighScore(); // Load the high score here
     highScoreElem.textContent = highScore;
 
@@ -30,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('restart-btn').addEventListener('click', restartGame);
 
-    initialiseGame();
+    initialiseGame(); // Initialize the game after DOM is loaded
 });
 
 // Function to update the score
