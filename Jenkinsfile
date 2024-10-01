@@ -89,6 +89,7 @@ pipeline {
         stage('Monitoring and Alerting') {
             steps {
                 script {
+                    sh 'chmod +x ./monitor_container.sh'
                     sh './monitor_container.sh ${CONTAINER_NAME}'
                 }
             }
