@@ -62,19 +62,15 @@ describe('2048 Game Tests', () => {
         // Assign global document so code can access it
         global.window = window;
         global.document = document;
-
-        // Initialise elements
         global.currentScoreElem = document.getElementById('current-score');
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
+        global.initialiseGame = initialiseGame;
+        global.updateScore = updateScore;
+        global.move = move;
+        global.checkGameOver = checkGameOver;
 
-        // Set up the game
-        restartGame();
-        global.initialiseGame = game.initialiseGame;
-        global.updateScore = game.updateScore;
-        global.move = game.move;
-        global.checkGameOver = game.checkGameOver;
-
+        
         currentScoreElem.textContent = '0';
         highScoreElem.textContent = '0';
         gameOverElem.style.display = 'none';
