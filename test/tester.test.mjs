@@ -1,30 +1,13 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
-
-global.localStorage = {
-    store: {},
-    getItem(key) {
-        return this.store[key] || null;
-    },
-    setItem(key, value) {
-        this.store[key] = value.toString();
-    },
-    removeItem(key) {
-        delete this.store[key];
-    },
-    clear() {
-        this.store = {};
-    }
-};
-
-import { 
-    board, 
-    restartGame, 
-    move, 
-    updateScore, 
-    checkGameOver, 
-    initialiseGame 
-} from '../src/script.mjs';
+import {
+    board,
+    restartGame,
+    move,
+    updateScore,
+    checkGameOver,
+    initialiseGame
+} from '../src/script.mjs'; // adjust the import path as needed
 
 describe('2048 Game Tests', () => {
     let window, document;
@@ -62,20 +45,31 @@ describe('2048 Game Tests', () => {
         // Assign global document so code can access it
         global.window = window;
         global.document = document;
+
+        // Initialise elements
         global.currentScoreElem = document.getElementById('current-score');
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
-        global.initialiseGame = initialiseGame;
-        global.updateScore = updateScore;
-        global.move = move;
-        global.checkGameOver = checkGameOver;
 
-        
-        currentScoreElem.textContent = '0';
-        highScoreElem.textContent = '0';
-        gameOverElem.style.display = 'none';
+        // Mock localStorage
+        global.localStorage = {
+            store: {},
+            getItem(key) {
+                return this.store[key] || null;
+            },
+            setItem(key, value) {
+                this.store[key] = value.toString();
+            },
+            removeItem(key) {
+                delete this.store[key];
+            },
+            clear() {
+                this.store = {};
+            }
+        };
 
-        // Initialise the game before tests
+        // Set up the game
+        restartGame();
         initialiseGame();
     });
 

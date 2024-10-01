@@ -17,33 +17,40 @@ function loadHighScore() {
     return 0; // Default if localStorage is not available
 }
 
-// Load the high score when the DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    currentScoreElem = document.getElementById('current-score');
-    highScoreElem = document.getElementById('high-score');
-    gameOverElem = document.getElementById('game-over');
-    
-    highScore = loadHighScore(); // Load the high score here
-    highScoreElem.textContent = highScore;
+// Function to initialize UI elements and event listeners
+export function setupUI() {
+    if (typeof document !== 'undefined') {
+        currentScoreElem = document.getElementById('current-score');
+        highScoreElem = document.getElementById('high-score');
+        gameOverElem = document.getElementById('game-over');
+        
+        highScore = loadHighScore(); // Load the high score here
+        highScoreElem.textContent = highScore;
 
-    // Event listeners
-    document.addEventListener('keydown', event => {
-        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-            move(event.key);
-        }
-    });
-    document.getElementById('restart-btn').addEventListener('click', restartGame);
+        // Event listeners
+        document.addEventListener('keydown', event => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+                move(event.key);
+            }
+        });
+        document.getElementById('restart-btn').addEventListener('click', restartGame);
 
-    initialiseGame(); // Initialize the game after DOM is loaded
-});
+        initialiseGame(); // Initialize the game after DOM is loaded
+    }
+}
+
+// Load UI when the DOM is fully loaded
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', setupUI);
+}
 
 // Function to update the score
 export function updateScore(value) {
     currentScore += value;
-    currentScoreElem.textContent = currentScore;
+    if (currentScoreElem) currentScoreElem.textContent = currentScore;
     if (currentScore > highScore) {
         highScore = currentScore;
-        highScoreElem.textContent = highScore;
+        if (highScoreElem) highScoreElem.textContent = highScore;
         if (typeof localStorage !== 'undefined') {
             localStorage.setItem('2048-highScore', highScore);
         }
@@ -53,8 +60,8 @@ export function updateScore(value) {
 // Function to restart the game
 export function restartGame() {
     currentScore = 0;
-    currentScoreElem.textContent = '0';
-    gameOverElem.style.display = 'none';
+    if (currentScoreElem) currentScoreElem.textContent = '0';
+    if (gameOverElem) gameOverElem.style.display = 'none';
     initialiseGame();
 }
 
@@ -71,19 +78,21 @@ export function renderBoard() {
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
             const cell = document.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-            const prevValue = cell.dataset.value;
+            const prevValue = cell?.dataset.value; // Use optional chaining
             const currentValue = board[i][j];
-            if (currentValue !== 0) {
-                cell.dataset.value = currentValue;
-                cell.textContent = currentValue;
-                // Animation handling
-                if (currentValue !== parseInt(prevValue) && !cell.classList.contains('new-tile')) {
-                    cell.classList.add('merged-tile');
+            if (cell) {
+                if (currentValue !== 0) {
+                    cell.dataset.value = currentValue;
+                    cell.textContent = currentValue;
+                    // Animation handling
+                    if (currentValue !== parseInt(prevValue) && !cell.classList.contains('new-tile')) {
+                        cell.classList.add('merged-tile');
+                    }
+                } else {
+                    cell.textContent = '';
+                    delete cell.dataset.value;
+                    cell.classList.remove('merged-tile', 'new-tile');
                 }
-            } else {
-                cell.textContent = '';
-                delete cell.dataset.value;
-                cell.classList.remove('merged-tile', 'new-tile');
             }
         }
     }
@@ -112,7 +121,9 @@ export function placeRandom() {
         const randomCell = available[Math.floor(Math.random() * available.length)];
         board[randomCell.x][randomCell.y] = Math.random() < 0.9 ? 2 : 4;
         const cell = document.querySelector(`[data-row="${randomCell.x}"][data-col="${randomCell.y}"]`);
-        cell.classList.add('new-tile'); // Animation for new tiles
+        if (cell) {
+            cell.classList.add('new-tile'); // Animation for new tiles
+        }
     }
 }
 
@@ -186,5 +197,7 @@ export function checkGameOver() {
     }
 
     // If we reach here, no moves are possible
-    gameOverElem.style.display = 'flex';
+    if (gameOverElem) {
+        gameOverElem.style.display = 'flex';
+    }
 }
