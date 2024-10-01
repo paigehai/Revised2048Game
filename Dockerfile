@@ -1,8 +1,11 @@
 # Use an official Nginx image as a parent image
 FROM nginx:alpine
 
-# Copy the current directory contents into the container at /usr/share/nginx/html
-COPY . /usr/share/nginx/html
+# Copy your custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose port 3000 to the world outside this container
-EXPOSE 3000
+# Copy the src directory contents into the container at /usr/share/nginx/html/src
+COPY src /usr/share/nginx/html/src
+
+# Expose port 80
+EXPOSE 80
