@@ -28,62 +28,46 @@ global.localStorage = {
 describe('2048 Game Tests', () => {
     let window, document;
 
-    before(async () => {
-        // Set up jsdom to simulate the browser environment
+    // Helper function to set up the DOM
+    const setUpDOM = () => {
         const dom = new JSDOM(`<!DOCTYPE html><html><body>
             <div id="current-score">0</div>
             <div id="high-score">0</div>
             <div id="game-over" style="display: none;"></div>
             <button id="restart-btn">Restart</button>
             <div class="grid">
-                <div data-row="0" data-col="0"></div>
-                <div data-row="0" data-col="1"></div>
-                <div data-row="0" data-col="2"></div>
-                <div data-row="0" data-col="3"></div>
-                <div data-row="1" data-col="0"></div>
-                <div data-row="1" data-col="1"></div>
-                <div data-row="1" data-col="2"></div>
-                <div data-row="1" data-col="3"></div>
-                <div data-row="2" data-col="0"></div>
-                <div data-row="2" data-col="1"></div>
-                <div data-row="2" data-col="2"></div>
-                <div data-row="2" data-col="3"></div>
-                <div data-row="3" data-col="0"></div>
-                <div data-row="3" data-col="1"></div>
-                <div data-row="3" data-col="2"></div>
-                <div data-row="3" data-col="3"></div>
+                ${Array.from({ length: 16 }, (_, i) => 
+                    `<div data-row="${Math.floor(i / 4)}" data-col="${i % 4}"></div>`
+                ).join('')}
             </div>
         </body></html>`);
 
         window = dom.window;
         document = window.document;
 
-        // Assign global document so code can access it
         global.window = window;
         global.document = document;
 
-        // Initialise elements
         global.currentScoreElem = document.getElementById('current-score');
         global.highScoreElem = document.getElementById('high-score');
         global.gameOverElem = document.getElementById('game-over');
+    };
 
-        // Set up the game
+    // Helper function to initialize game state
+    const initializeGameState = () => {
         restartGame();
-        global.initialiseGame = game.initialiseGame;
-        global.updateScore = game.updateScore;
-        global.move = game.move;
-        global.checkGameOver = game.checkGameOver;
-
+        initialiseGame();
         currentScoreElem.textContent = '0';
         highScoreElem.textContent = '0';
         gameOverElem.style.display = 'none';
+    };
 
-        // Initialise the game before tests
-        initialiseGame();
+    before(async () => {
+        setUpDOM();
+        initializeGameState();
     });
 
     beforeEach(() => {
-        // Reset the game state before each test
         initialiseGame();
     });
 
@@ -91,16 +75,11 @@ describe('2048 Game Tests', () => {
         expect(currentScoreElem.textContent).to.equal('0');
         expect(highScoreElem.textContent).to.equal('0');
 
-        // Verify the game board is initialised correctly
         const gridCells = document.querySelectorAll('.grid div');
-        let hasTile = false;
-        gridCells.forEach(cell => {
-            const cellValue = cell.textContent;
-            if (cellValue === '2' || cellValue === '4') {
-                hasTile = true; // At least one tile is present
-            }
-        });
-        expect(hasTile).to.be.true; // Check that there is at least one tile
+        const hasTile = Array.from(gridCells).some(cell => 
+            cell.textContent === '2' || cell.textContent === '4'
+        );
+        expect(hasTile).to.be.true;
     });
 
     it('Game Update Unit Test', () => {
@@ -110,25 +89,17 @@ describe('2048 Game Tests', () => {
 
     it('Mouse Button Click Unit Test', () => {
         const restartBtn = document.getElementById('restart-btn');
-        restartBtn.click(); // Simulate button click
+        restartBtn.click();
 
-        // Validate that the current score has been reset
         expect(currentScoreElem.textContent).to.equal('0');
-
-        // Verify the game board is initialised correctly
         const gridCells = document.querySelectorAll('.grid div');
-        let hasTile = false;
-        gridCells.forEach(cell => {
-            const cellValue = cell.textContent;
-            if (cellValue === '2' || cellValue === '4') {
-                hasTile = true; // At least one tile is present
-            }
-        });
-        expect(hasTile).to.be.true; // Check that there is at least one tile
+        const hasTile = Array.from(gridCells).some(cell => 
+            cell.textContent === '2' || cell.textContent === '4'
+        );
+        expect(hasTile).to.be.true;
     });
 
     it('Tile Movement Unit Test', () => {
-        // Set a mock initial board state
         const initialBoardState = [
             [2, 2, 0, 0],
             [0, 0, 0, 0],
@@ -136,22 +107,14 @@ describe('2048 Game Tests', () => {
             [0, 0, 0, 0]
         ];
 
-        // Directly assign the mock state to the board
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                board[i][j] = initialBoardState[i][j];
-            }
-        }
-
-        // Simulate moving the tiles to the left
+        board.forEach((row, i) => row.forEach((_, j) => board[i][j] = initialBoardState[i][j]));
+        
         move('ArrowLeft');
 
-        // Validate the board state after the move
-        expect(board[0]).to.deep.equal([4, 0, 0, 0]);  // The merged result of [2, 2, 0, 0]
+        expect(board[0]).to.deep.equal([4, 0, 0, 0]);
     });
 
     it('Game Over Unit Test', () => {
-        // Set up a mock "game over" board
         const gameOverBoard = [
             [2, 4, 8, 16],
             [32, 64, 128, 256],
@@ -159,22 +122,13 @@ describe('2048 Game Tests', () => {
             [8192, 16384, 32768, 65536]
         ];
 
-        // Set the board state manually
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                board[i][j] = gameOverBoard[i][j];
-            }
-        }
-
-        // Check if game over is detected
-        checkGameOver();  // This function should alter the DOM (e.g., display the "game-over" div)
-
-        // Validate that the game over condition has been applied
+        board.forEach((row, i) => row.forEach((_, j) => board[i][j] = gameOverBoard[i][j]));
+        
+        checkGameOver();
         expect(gameOverElem.style.display).to.equal('flex');
     });
 
     it('Random Tile After Move Unit Test', () => {
-        // Set up an initial board state with one empty space
         const initialBoardState = [
             [2, 0, 2, 0],
             [0, 0, 0, 0],
@@ -182,18 +136,11 @@ describe('2048 Game Tests', () => {
             [0, 0, 0, 0]
         ];
 
-        // Directly assign the mock state to the board
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                board[i][j] = initialBoardState[i][j];
-            }
-        }
-
-        // Simulate a move that causes a change
+        board.forEach((row, i) => row.forEach((_, j) => board[i][j] = initialBoardState[i][j]));
+        
         move('ArrowLeft');
 
-        // Check that a random tile has been placed
         const nonZeroTiles = board.flat().filter(value => value !== 0).length;
-        expect(nonZeroTiles).to.equal(2); // 1 merged tile, 1 new tile
+        expect(nonZeroTiles).to.equal(2);
     });
 });
