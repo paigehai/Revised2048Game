@@ -6,7 +6,7 @@
     "main": "script.mjs",
     "scripts": {
         "test": "mocha -r esm '**/*.test.mjs'",
-        "start": "node script.mjs"
+        "start": "node src/script.mjs"
     },
     "author": "Paige Haines",
     "license": "MIT",
