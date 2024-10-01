@@ -9,3 +9,6 @@ COPY src /usr/share/nginx/html/src
 
 # Expose port 80
 EXPOSE 80
+
+# Add a health check that sends a request to the Nginx server
+HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost/ || exit 1

@@ -12,6 +12,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonarqube-token')
         DOCKER_IMAGE_NAME = 'paigehai/2048game:latest'
         SONAR_URL = 'http://localhost:9000/'
+        CONTAINER_NAME = 'pipeline-app-1'
     }
 
     stages {
@@ -59,14 +60,14 @@ pipeline {
                             -Dsonar.projectKey=2048Game \
                             -Dsonar.java.binaries=. \
                             -Dsonar.inclusions=src/script.mjs \
-                            -Dsonar.url=${SONAR_URL} \
+                            -Dsonar.url=${SONAR_URL}
                         """
                     }
                 }
             }
         }
 
-        stage('Deploy to Container') {
+        stage('Deploy to Staging') {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
@@ -77,15 +78,19 @@ pipeline {
             }
         }
 
-        stage('Release to Production') {
+        stage('Deploy to Production') {
             steps {
-                echo 'Deploying to production using AWS CodeDeploy...'
+                script {
+                    sh "docker-compose up -d"
+                }
             }
         }
 
         stage('Monitoring and Alerting') {
             steps {
-                echo 'Monitoring for anomolies using DataDog...'
+                script {
+                    sh './monitor_container.sh ${CONTAINER_NAME}'
+                }
             }
         }
     }
