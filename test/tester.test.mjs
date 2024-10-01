@@ -1,5 +1,22 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
+
+global.localStorage = {
+    store: {},
+    getItem(key) {
+        return this.store[key] || null;
+    },
+    setItem(key, value) {
+        this.store[key] = value.toString();
+    },
+    removeItem(key) {
+        delete this.store[key];
+    },
+    clear() {
+        this.store = {};
+    }
+};
+
 import { board, restartGame, move, updateScore, checkGameOver, initialiseGame } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
@@ -38,22 +55,6 @@ describe('2048 Game Tests', () => {
         // Assign global document so code can access it
         global.window = window;
         global.document = document;
-
-        global.localStorage = {
-            store: {},
-            getItem(key) {
-                return this.store[key] || null;
-            },
-            setItem(key, value) {
-                this.store[key] = value.toString();
-            },
-            removeItem(key) {
-                delete this.store[key];
-            },
-            clear() {
-                this.store = {};
-            }
-        };
 
         // Initialise elements
         global.currentScoreElem = document.getElementById('current-score');
