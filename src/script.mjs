@@ -1,6 +1,6 @@
 // Game configuration
 const size = 4;
-let board = [];
+export let board = [];
 let currentScore = 0;
 let highScore = localStorage.getItem('2048-highScore') || 0;
 
