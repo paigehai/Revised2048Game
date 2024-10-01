@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: paigehai/2048Game:latest
+    image: paigehai/2048game:latest
     ports:
       - "3000:3000"
   nginx:
