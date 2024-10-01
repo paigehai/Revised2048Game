@@ -38,6 +38,22 @@ describe('2048 Game Tests', () => {
         global.window = window;
         global.document = document;
 
+        global.localStorage = {
+            store: {},
+            getItem(key) {
+                return this.store[key] || null;
+            },
+            setItem(key, value) {
+                this.store[key] = value.toString();
+            },
+            removeItem(key) {
+                delete this.store[key];
+            },
+            clear() {
+                this.store = {};
+            }
+        };
+
         // Initialise elements
         global.currentScoreElem = document.getElementById('current-score');
         global.highScoreElem = document.getElementById('high-score');
