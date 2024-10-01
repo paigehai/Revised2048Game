@@ -1,8 +1,11 @@
-# Use an official Nginx image as a parent image
-FROM nginx:alpine
+FROM node:14-alpine
 
-# Copy the current directory contents into the container at /usr/share/nginx/html
-COPY . /usr/share/nginx/html
+WORKDIR /usr/src/app
 
-# Expose port 80 to the world outside this container
-EXPOSE 80
+COPY package*.json /usr/src/app
+
+RUN npm install
+
+COPY . /usr/src/app
+
+CMD npm start
