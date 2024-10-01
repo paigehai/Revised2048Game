@@ -1,5 +1,13 @@
 import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
+import { 
+    board, 
+    restartGame, 
+    move, 
+    updateScore, 
+    checkGameOver, 
+    initialiseGame 
+} from '../src/script.mjs';
 
 global.localStorage = {
     store: {},
@@ -16,8 +24,6 @@ global.localStorage = {
         this.store = {};
     }
 };
-
-import { board, restartGame, move, updateScore, checkGameOver, initialiseGame } from '../src/script.mjs';
 
 describe('2048 Game Tests', () => {
     let window, document;
