@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: paigehai/2048game:latest
+    image: ${DOCKER_IMAGE_NAME}
     ports:
       - "8070:80"
   nginx:
