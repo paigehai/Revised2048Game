@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import {
     board,
     restartGame,
+    currentScore,
     move,
     updateScore,
     checkGameOver,
@@ -95,7 +96,7 @@ describe('2048 Game Tests', () => {
     });
 
     it('Game Update Unit Test', () => {
-        currentScore = 0
+        currentScore = 0;
         currentScoreElem.textContent = '0'; 
         updateScore(10);
         expect(currentScoreElem.textContent).to.equal('10');

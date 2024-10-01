@@ -1,7 +1,7 @@
 // Game configuration
 const size = 4;
 export let board = [];
-let currentScore = 0;
+export let currentScore = 0;
 let highScore = 0; // Default high score
 
 // UI Elements
