@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8070
 
 # Command to run the application
-CMD ["npm", "start"]
+CMD ["node", "src/script.mjs"]

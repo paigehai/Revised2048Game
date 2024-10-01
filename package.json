@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "type": "module",
     "description": "A simple JavaScript 2048 game",
-    "main": "script.mjs",
+    "main": "src/script.mjs",
     "scripts": {
         "test": "mocha -r esm '**/*.test.mjs'",
-        "start": "node script.mjs"
+        "start": "node src/script.mjs"
     },
     "author": "Paige Haines",
     "license": "MIT",
