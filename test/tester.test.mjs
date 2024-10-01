@@ -2,7 +2,6 @@ import { JSDOM } from 'jsdom';
 import { expect } from 'chai';
 import { board, restartGame, move, updateScore, checkGameOver, initialiseGame } from '../src/script.mjs';
 
-
 describe('2048 Game Tests', () => {
     let window, document;
 
@@ -62,7 +61,7 @@ describe('2048 Game Tests', () => {
         global.gameOverElem = document.getElementById('game-over');
 
         // Set up the game
-        game.restartGame();
+        restartGame();
         global.initialiseGame = game.initialiseGame;
         global.updateScore = game.updateScore;
         global.move = game.move;
