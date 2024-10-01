@@ -2,12 +2,36 @@
 const size = 4;
 export let board = [];
 let currentScore = 0;
-let highScore = localStorage.getItem('2048-highScore') || 0;
+let highScore = 0; // Default high score
 
 // UI Elements
 const currentScoreElem = document.getElementById('current-score');
 const highScoreElem = document.getElementById('high-score');
 const gameOverElem = document.getElementById('game-over');
+
+// Function to load high score from localStorage
+function loadHighScore() {
+    if (typeof localStorage !== 'undefined') {
+        return localStorage.getItem('2048-highScore') || 0;
+    }
+    return 0; // Default if localStorage is not available
+}
+
+// Load the high score when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    highScore = loadHighScore(); // Load the high score here
+    highScoreElem.textContent = highScore;
+
+    // Event listeners
+    document.addEventListener('keydown', event => {
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+            move(event.key);
+        }
+    });
+    document.getElementById('restart-btn').addEventListener('click', restartGame);
+
+    initialiseGame();
+});
 
 // Function to update the score
 export function updateScore(value) {
@@ -16,7 +40,9 @@ export function updateScore(value) {
     if (currentScore > highScore) {
         highScore = currentScore;
         highScoreElem.textContent = highScore;
-        localStorage.setItem('2048-highScore', highScore);
+        if (typeof localStorage !== 'undefined') {
+            localStorage.setItem('2048-highScore', highScore);
+        }
     }
 }
 
@@ -158,19 +184,3 @@ export function checkGameOver() {
     // If we reach here, no moves are possible
     gameOverElem.style.display = 'flex';
 }
-
-// Set up the DOMContentLoaded listener
-document.addEventListener('DOMContentLoaded', () => {
-    // Update the high score display
-    highScoreElem.textContent = highScore;
-
-    // Event listeners
-    document.addEventListener('keydown', event => {
-        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
-            move(event.key);
-        }
-    });
-    document.getElementById('restart-btn').addEventListener('click', restartGame);
-
-    initialiseGame();
-});
