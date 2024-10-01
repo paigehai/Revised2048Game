@@ -96,7 +96,6 @@ describe('2048 Game Tests', () => {
     });
 
     it('Game Update Unit Test', () => {
-        currentScore = 0;
         currentScoreElem.textContent = '0'; 
         updateScore(10);
         expect(currentScoreElem.textContent).to.equal('10');
