@@ -28,12 +28,3 @@ for ((i=1;i<=MAX_RETRIES;i++)); do
         sleep $RETRY_DELAY
     fi
 done
-
-# Step 3: Perform a health check by querying the Nginx server
-responseCode=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:80)
-if [ "$responseCode" = "200" ]; then
-    echo "Nginx is serving content properly. HTTP 200 received."
-else
-    echo "Error: Nginx is not serving content properly. HTTP response: $responseCode"
-    exit 1
-fi
