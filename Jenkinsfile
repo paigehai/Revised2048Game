@@ -19,7 +19,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo "Fetching files..."
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/paigehai/2O48Game'
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/paigehai/Revised2048Game'
             }
         }
 
