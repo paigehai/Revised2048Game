@@ -12,7 +12,7 @@ pipeline {
         SONAR_TOKEN = credentials('sonarqube-token')
         DOCKER_IMAGE_NAME = 'paigehai/2048game:latest'
         SONAR_URL = 'http://localhost:9000/'
-        CONTAINER_NAME = 'pipeline-app-1'
+        CONTAINER_NAME = '2048game-app-1'
     }
 
     stages {
