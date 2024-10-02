@@ -34,7 +34,7 @@ function loadHighScore() {
     return 0; // Default if localStorage is not available
 }
 
-// Function to initialize UI elements and event listeners
+// Function to initialise UI elements and event listeners
 export function setupUI() {
     if (typeof document !== 'undefined') {
         currentScoreElem = document.getElementById('current-score');
@@ -52,7 +52,7 @@ export function setupUI() {
         });
         document.getElementById('restart-btn').addEventListener('click', restartGame);
 
-        initialiseGame(); // Initialize the game after DOM is loaded
+        initialiseGame(); // Initialise the game after DOM is loaded
     }
 }
 
