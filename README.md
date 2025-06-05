@@ -19,7 +19,7 @@ This project is a simple web-based replication of the classic 2048 game. Players
 
 ## 📸 Jenkins Pipeline Overview
 
-![Jenkins Pipeline](../image/CDCI.png)
+![Jenkins Pipeline](images/CDCI.png)
 
 ### 🔄 Pipeline Stages
 
